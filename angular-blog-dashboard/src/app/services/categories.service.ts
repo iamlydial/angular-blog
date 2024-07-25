@@ -1,17 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Firestore, collection, addDoc } from '@angular/fire/firestore';
-
+import { Category } from '../models/category';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CategoriesService {
+  constructor(private afs: Firestore) {}
 
-  constructor(private afs: Firestore) { }
-
-
-  async saveData(data: any){
-
+  async saveData(data: Category) {
     try {
       const categoriesCollection = collection(this.afs, 'categories'); // Get reference to the collection
       const docRef = await addDoc(categoriesCollection, data); // Add document to the collection
@@ -21,5 +18,4 @@ export class CategoriesService {
       console.log(err);
     }
   }
-
 }

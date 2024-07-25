@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { Firestore, collection, addDoc } from '@angular/fire/firestore';
 import { CommonModule } from '@angular/common';
 import { CategoriesService } from '../services/categories.service';
+import { Category } from '../models/category';
 
 @Component({
   selector: 'app-categories',
@@ -17,7 +18,7 @@ export class CategoriesComponent implements OnInit {
   ngOnInit(): void {}
 
   async onSubmit(formData: { value: any }) {
-    let categoryData = {
+    let categoryData: Category = {
       category: formData.value.category,
     };
 
