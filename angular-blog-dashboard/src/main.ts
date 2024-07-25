@@ -9,5 +9,6 @@ bootstrapApplication(AppComponent, {
   ...appConfig,
   providers: [
     ...(appConfig.providers || []),
+    importProvidersFrom(BrowserAnimationsModule, ToastrModule.forRoot()),
   ],
 }).catch((err) => console.error(err));

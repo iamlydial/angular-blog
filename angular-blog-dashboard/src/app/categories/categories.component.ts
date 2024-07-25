@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Firestore, collection, addDoc } from '@angular/fire/firestore';
 import { CommonModule } from '@angular/common';
 import { CategoriesService } from '../services/categories.service';
 import { Category } from '../models/category';
@@ -13,15 +12,20 @@ import { Category } from '../models/category';
   styleUrls: ['./categories.component.css'],
 })
 export class CategoriesComponent implements OnInit {
+  categories: Category[] = [];
   constructor(private categoryService: CategoriesService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+   this.categoryService.loadData().subscribe(val =>{console.log('categories from onInit',val)})
+  }
 
   async onSubmit(formData: { value: any }) {
     let categoryData: Category = {
       category: formData.value.category,
+      id: '',
     };
 
     this.categoryService.saveData(categoryData);
   }
+
 }
