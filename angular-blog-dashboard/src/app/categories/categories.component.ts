@@ -37,16 +37,25 @@ export class CategoriesComponent implements OnInit {
     if (this.formStatus == 'Add') {
       this.categoryService.saveData(categoryData);
     } else if (this.formStatus == 'Edit') {
-      this.categoryService.editData(this.formCategoryId, categoryData);
+      this.categoryService.updateData(this.formCategoryId, categoryData);
+    } else if (this.formStatus == 'Delete') {
+      this.categoryService.deleteData(this.formCategoryId);
     }
     formData.reset();
     this.formStatus = 'Add';
   }
 
   onEdit(category: string, id: string) {
-    console.log(category);
+    console.log('Item to be Edited', category, id);
     this.formCategory = category;
     this.formCategoryId = id;
     this.formStatus = 'Edit';
+  }
+
+  onDelete(category: string, id: string) {
+    console.log('Item to be Deleted', category, id);
+    this.formCategory = category;
+    this.formCategoryId = id;
+    this.formStatus = 'Delete';
   }
 }

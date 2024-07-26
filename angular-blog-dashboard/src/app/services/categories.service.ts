@@ -7,6 +7,7 @@ import {
   query,
   doc,
   updateDoc,
+  deleteDoc,
 } from '@angular/fire/firestore';
 import { Category } from '../models/category';
 import { ToastrService } from 'ngx-toastr';
@@ -49,7 +50,7 @@ export class CategoriesService {
     });
   }
 
-  async editData(id: string, editData: any) {
+  async updateData(id: string, editData: any) {
     const docRef = doc(this.afs, `categories/${id}`);
     console.log('Category ID from edit function: ', docRef);
     try {
@@ -58,6 +59,17 @@ export class CategoriesService {
     } catch (error) {
       console.error('Error editing document: ', error);
       this.toastr.error('Error editing data');
+    }
+  }
+
+  async deleteData(id: string) {
+    const docRef = doc(this.afs, `categories/${id}`);
+    try {
+      await deleteDoc(docRef);
+      this.toastr.success('Data Deleted Successfully');
+    } catch (error) {
+      console.error('Error deleting document: ', error);
+      this.toastr.error('Error deleting data');
     }
   }
 }
