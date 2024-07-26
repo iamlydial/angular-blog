@@ -16,6 +16,7 @@ export class CategoriesComponent implements OnInit {
   @ViewChild('formRef') formRef!: NgForm;
   categoryArray: Category[] = [];
   formCategory!: string;
+  formCategoryId!: string;
   formStatus: string = 'Add';
 
   constructor(private categoryService: CategoriesService) {}
@@ -30,16 +31,22 @@ export class CategoriesComponent implements OnInit {
   async onSubmit(formData: NgForm) {
     let categoryData: Category = {
       category: formData.value.category,
-      id: '',
+      id: this.formStatus === 'Edit' ? this.formCategoryId : '',
     };
 
-    this.categoryService.saveData(categoryData);
+    if (this.formStatus == 'Add') {
+      this.categoryService.saveData(categoryData);
+    } else if (this.formStatus == 'Edit') {
+      this.categoryService.editData(this.formCategoryId, categoryData);
+    }
     formData.reset();
+    this.formStatus = 'Add';
   }
 
-  onEdit(category: string) {
+  onEdit(category: string, id: string) {
     console.log(category);
     this.formCategory = category;
+    this.formCategoryId = id;
     this.formStatus = 'Edit';
   }
 }

@@ -5,7 +5,8 @@ import {
   addDoc,
   onSnapshot,
   query,
-  DocumentData,
+  doc,
+  updateDoc,
 } from '@angular/fire/firestore';
 import { Category } from '../models/category';
 import { ToastrService } from 'ngx-toastr';
@@ -15,7 +16,6 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class CategoriesService {
-
   constructor(private afs: Firestore, private toastr: ToastrService) {}
 
   async saveData(data: Category) {
@@ -47,5 +47,17 @@ export class CategoriesService {
       // Clean up subscription
       return () => unsubscribe();
     });
+  }
+
+  async editData(id: string, editData: any) {
+    const docRef = doc(this.afs, `categories/${id}`);
+    console.log('Category ID from edit function: ', docRef);
+    try {
+      await updateDoc(docRef, editData);
+      this.toastr.success('Data Edited Successfully');
+    } catch (error) {
+      console.error('Error editing document: ', error);
+      this.toastr.error('Error editing data');
+    }
   }
 }
