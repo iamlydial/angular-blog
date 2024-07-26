@@ -15,8 +15,8 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class CategoriesService {
+
   constructor(private afs: Firestore, private toastr: ToastrService) {}
-  
 
   async saveData(data: Category) {
     try {
