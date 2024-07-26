@@ -15,6 +15,9 @@ import { NgForm } from '@angular/forms';
 export class CategoriesComponent implements OnInit {
   @ViewChild('formRef') formRef!: NgForm;
   categoryArray: Category[] = [];
+  formCategory!: string;
+  formStatus: string = 'Add';
+
   constructor(private categoryService: CategoriesService) {}
 
   ngOnInit(): void {
@@ -32,5 +35,11 @@ export class CategoriesComponent implements OnInit {
 
     this.categoryService.saveData(categoryData);
     formData.reset();
+  }
+
+  onEdit(category: string) {
+    console.log(category);
+    this.formCategory = category;
+    this.formStatus = 'Edit';
   }
 }
