@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { CategoriesService } from '../services/categories.service';
 import { Category } from '../models/category';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-categories',
@@ -12,6 +13,7 @@ import { Category } from '../models/category';
   styleUrls: ['./categories.component.css'],
 })
 export class CategoriesComponent implements OnInit {
+  @ViewChild('formRef') formRef!: NgForm;
   categoryArray: Category[] = [];
   constructor(private categoryService: CategoriesService) {}
 
@@ -22,12 +24,13 @@ export class CategoriesComponent implements OnInit {
     });
   }
 
-  async onSubmit(formData: { value: any }) {
+  async onSubmit(formData: NgForm) {
     let categoryData: Category = {
       category: formData.value.category,
       id: '',
     };
 
     this.categoryService.saveData(categoryData);
+    formData.reset();
   }
 }
