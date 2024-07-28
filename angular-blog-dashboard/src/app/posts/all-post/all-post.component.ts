@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-all-post',
   standalone: true,
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './all-post.component.html',
   styleUrl: './all-post.component.css'
 })
