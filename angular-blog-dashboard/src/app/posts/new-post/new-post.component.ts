@@ -10,6 +10,8 @@ import { FormsModule } from '@angular/forms';
 })
 export class NewPostComponent implements OnInit {
   permalink: string = '';
+  imgSrc: any = './assets/placeholder-image.png';
+  selectedImage: any;
 
   constructor() {}
   ngOnInit(): void {}
@@ -17,5 +19,14 @@ export class NewPostComponent implements OnInit {
   onTitleChanges($event: any) {
     const title = $event.target.value;
     this.permalink = title.replace(/\s/g, '-');
+  }
+
+  showPreview($event: any) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      this.imgSrc = e.target?.result;
+    };
+    reader.readAsDataURL($event?.target.files[0]);
+    this.selectedImage = $event?.target.files[0];
   }
 }
