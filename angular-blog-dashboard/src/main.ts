@@ -7,6 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 bootstrapApplication(AppComponent, {
   ...appConfig,
+
   providers: [
     ...(appConfig.providers || []),
     importProvidersFrom(BrowserAnimationsModule, ToastrModule.forRoot()),

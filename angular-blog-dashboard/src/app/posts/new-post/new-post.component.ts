@@ -3,11 +3,12 @@ import { FormsModule } from '@angular/forms';
 import { CategoriesService } from '../../services/categories.service';
 import { Category } from '../../models/category';
 import { CommonModule } from '@angular/common';
+import { AngularEditorModule } from '@kolkov/angular-editor';
 
 @Component({
   selector: 'app-new-post',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, AngularEditorModule],
   templateUrl: './new-post.component.html',
   styleUrl: './new-post.component.css',
 })

@@ -10,6 +10,11 @@
   --navbar-footer-color: #f9f9f9;
 }
 
+.angular-editor-toolbar button i {
+  font-family: FontAwesome !important;
+  color: #474d6d !important;
+}
+
 body {
   font-family: "Roboto", sans-serif;
   font-size: 14px;
