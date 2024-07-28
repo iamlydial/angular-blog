@@ -6,8 +6,6 @@ import { RouterLink } from '@angular/router';
   standalone: true,
   imports: [RouterLink],
   templateUrl: './all-post.component.html',
-  styleUrl: './all-post.component.css'
+  styleUrl: './all-post.component.css',
 })
-export class AllPostComponent {
-
-}
+export class AllPostComponent {}
