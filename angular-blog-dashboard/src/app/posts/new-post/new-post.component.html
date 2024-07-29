@@ -94,7 +94,10 @@
             }"
           >
             <option value="" disabled selected>Select a post category</option>
-            <option *ngFor="let category of categories" [value]="category.id">
+            <option
+              *ngFor="let category of categories"
+              value="{{ category.id }}-{{ category.category }}"
+            >
               {{ category.category }}
             </option>
           </select>

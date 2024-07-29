@@ -10,6 +10,7 @@ import { CategoriesService } from '../../services/categories.service';
 import { Category } from '../../models/category';
 import { CommonModule } from '@angular/common';
 import { AngularEditorModule } from '@kolkov/angular-editor';
+import { Post } from '../../models/post';
 
 @Component({
   selector: 'app-new-post',
@@ -70,5 +71,25 @@ export class NewPostComponent implements OnInit {
 
   onSubmit() {
     console.log(this.postForm.value);
+
+    let splitted = this.postForm.value.category.split('-');
+    console.log(splitted);
+
+    const postData: Post = {
+      title: this.postForm.value.title,
+      permalink: this.postForm.value.permalink,
+      excerpt: this.postForm.value.excerpt,
+      category: {
+        categoryId: splitted[0],
+        category: splitted[1],
+      },
+      postImage: '',
+      content: this.postForm.value.content,
+      isFeatured: false,
+      views: 0,
+      status: 'new',
+      createdAt: new Date(),
+    };
+    console.log(postData);
   }
 }
