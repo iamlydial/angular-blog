@@ -4,11 +4,12 @@ import {
   ref,
   uploadBytes,
   getDownloadURL,
+  Storage,
 } from '@angular/fire/storage';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PostsService {
-  constructor() {}
+  constructor(private storage: Storage) {}
 }
