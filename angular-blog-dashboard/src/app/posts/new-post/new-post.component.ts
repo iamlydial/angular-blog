@@ -38,9 +38,9 @@ export class NewPostComponent implements OnInit {
       title: ['', [Validators.required, Validators.minLength(10)]],
       permalink: [{ value: '', disabled: true }, [Validators.required]],
       excerpt: ['', [Validators.required, Validators.minLength(50)]],
-      category: ['',[Validators.required]],
-      postImage: ['',[Validators.required]],
-      content: ['',[Validators.required]],
+      category: ['', [Validators.required]],
+      postImage: ['', [Validators.required]],
+      content: ['', [Validators.required]],
     });
   }
 
@@ -50,7 +50,7 @@ export class NewPostComponent implements OnInit {
     });
   }
 
-  get fc(){
+  get fc() {
     return this.postForm.controls;
   }
 
@@ -66,5 +66,9 @@ export class NewPostComponent implements OnInit {
     };
     reader.readAsDataURL($event?.target.files[0]);
     this.selectedImage = $event?.target.files[0];
+  }
+
+  onSubmit() {
+    console.log(this.postForm.value);
   }
 }
