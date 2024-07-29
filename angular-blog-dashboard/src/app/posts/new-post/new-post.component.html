@@ -5,7 +5,7 @@
       <p class="mb-5">You can add your new post here</p>
     </div>
   </div>
-  <form>
+  <form [formGroup]="postForm">
     <div class="row">
       <div class="col-md-7">
         <div class="card shadow-effect">
@@ -16,6 +16,7 @@
                 type="text"
                 class="form-control"
                 (keyup)="onTitleChanges($event)"
+                formControlName="title"
               />
             </div>
             <div class="form-group">
@@ -25,12 +26,16 @@
                 class="form-control"
                 [(ngModel)]="permalink"
                 name="permalink"
-                disabled
+                formControlName="permalink"
               />
             </div>
             <div class="form-group">
               <label for="">Excerpt</label>
-              <textarea cols="30" class="form-control"></textarea>
+              <textarea
+                cols="30"
+                class="form-control"
+                formControlName="excerpt"
+              ></textarea>
             </div>
           </div>
         </div>
@@ -39,7 +44,7 @@
       <div class="col-md-5">
         <div class="form-group">
           <label for="">Please select a post category </label>
-          <select class="form-control">
+          <select class="form-control" formControlName="category">
             <option value="" disabled selected>Select a post category</option>
             <option *ngFor="let category of categories" value="">
               {{ category.category }}
@@ -55,6 +60,7 @@
             class="form-control"
             accept="image/*"
             (change)="showPreview($event)"
+            formControlName="postImage"
           />
         </div>
       </div>
@@ -69,6 +75,7 @@
               <!-- <textarea cols="30" rows="10" class="form-control"></textarea> -->
               <angular-editor
                 placeholder="Add your content here"
+                formControlName="content"
               ></angular-editor>
             </div>
           </div>
