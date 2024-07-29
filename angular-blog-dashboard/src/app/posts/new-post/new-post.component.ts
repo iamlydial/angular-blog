@@ -4,6 +4,7 @@ import {
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
+  Validators,
 } from '@angular/forms';
 import { CategoriesService } from '../../services/categories.service';
 import { Category } from '../../models/category';
@@ -34,12 +35,12 @@ export class NewPostComponent implements OnInit {
     private fb: FormBuilder
   ) {
     this.postForm = this.fb.group({
-      title: [''],
-      permalink: [''],
-      excerpt: [''],
-      category: [''],
-      postImage: [''],
-      content: [''],
+      title: ['', [Validators.required, Validators.minLength(10)]],
+      permalink: [{ value: '', disabled: true }, [Validators.required]],
+      excerpt: ['', [Validators.required, Validators.minLength(50)]],
+      category: ['',[Validators.required]],
+      postImage: ['',[Validators.required]],
+      content: ['',[Validators.required]],
     });
   }
 
@@ -47,6 +48,10 @@ export class NewPostComponent implements OnInit {
     this.categoryService.loadData().subscribe((val) => {
       this.categories = val;
     });
+  }
+
+  get fc(){
+    return this.postForm.controls;
   }
 
   onTitleChanges($event: any) {
