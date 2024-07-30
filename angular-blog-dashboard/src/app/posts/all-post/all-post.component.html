@@ -42,7 +42,10 @@
                 <td width="300">{{ post.excerpt }}</td>
                 <td>{{ post.category.category }}</td>
                 <td>{{ formatDate(post.createdAt) }}</td>
-                <td></td>
+                <td>
+                  <button class="btn btn-sm btn-warning">Edit</button>
+                  <button class="btn btn-sm btn-danger ml-3">Delete</button>
+                </td>
               </tr>
             </tbody>
           </table>
