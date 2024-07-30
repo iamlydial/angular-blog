@@ -12,6 +12,7 @@ import { CommonModule } from '@angular/common';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { Post } from '../../models/post';
 import { PostsService } from '../../services/posts.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-new-post',
@@ -30,6 +31,7 @@ export class NewPostComponent implements OnInit {
   imgSrc: any = './assets/placeholder-image.png';
   selectedImage: any;
   categories: Array<Category> = [];
+
   postForm!: FormGroup;
 
   constructor(
