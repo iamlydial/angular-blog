@@ -20,6 +20,7 @@ import {
 } from '@angular/fire/firestore';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -28,7 +29,8 @@ export class PostsService {
   constructor(
     private storage: Storage,
     private afs: Firestore,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private router: Router
   ) {}
 
   async uploadImage(selectedImage: any, postData: Post): Promise<string> {
@@ -41,18 +43,19 @@ export class PostsService {
     console.log('Post image uploaded successfully');
     postData.postImage = await getDownloadURL(storageRef);
     this.savePostData(postData);
-    
+
     return postData.postImage;
   }
 
-  async savePostData(postData: Post){
+  async savePostData(postData: Post) {
     const postCollection = collection(this.afs, 'posts');
     const docRef = await addDoc(postCollection, postData);
     const docId = docRef.id;
     console.log(`Post saved with ID: ${docId}`);
     postData.id = docId;
-    
+
     this.toastr.success('Post saved Successfully');
+    this.router.navigate(['/posts']);
   }
 
   loadData(): Observable<Post[]> {
