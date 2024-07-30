@@ -11,6 +11,7 @@ import { Category } from '../../models/category';
 import { CommonModule } from '@angular/common';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { Post } from '../../models/post';
+import { PostsService } from '../../services/posts.service';
 
 @Component({
   selector: 'app-new-post',
@@ -33,7 +34,8 @@ export class NewPostComponent implements OnInit {
 
   constructor(
     private categoryService: CategoriesService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private postService: PostsService
   ) {
     this.postForm = this.fb.group({
       title: ['', [Validators.required, Validators.minLength(10)]],
@@ -57,7 +59,8 @@ export class NewPostComponent implements OnInit {
 
   onTitleChanges($event: any) {
     const title = $event.target.value;
-    this.permalink = title.replace(/\s/g, '-');
+    const permalink = title.trim().toLowerCase().replace(/\s+/g, '-');
+    this.postForm.patchValue({ permalink });
   }
 
   showPreview($event: any) {
@@ -77,7 +80,7 @@ export class NewPostComponent implements OnInit {
 
     const postData: Post = {
       title: this.postForm.value.title,
-      permalink: this.postForm.value.permalink,
+      permalink: this.postForm.get('permalink')?.value,
       excerpt: this.postForm.value.excerpt,
       category: {
         categoryId: splitted[0],
@@ -90,6 +93,8 @@ export class NewPostComponent implements OnInit {
       status: 'new',
       createdAt: new Date(),
     };
-    console.log(postData);
+    this.postService.uploadImage(this.selectedImage, postData);
+    this.postForm.reset();
+    this.imgSrc = './assets/placeholder-image.png';
   }
 }
