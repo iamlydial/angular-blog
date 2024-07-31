@@ -15,11 +15,7 @@ import { Timestamp } from '@firebase/firestore';
 export class AllPostComponent implements OnInit {
   posts: Array<Post> = [];
 
-  
-
-  constructor(private postService: PostsService){
-
-  }
+  constructor(private postService: PostsService) {}
   ngOnInit(): void {
     this.postService.loadData().subscribe((postVal) => {
       this.posts = postVal;
@@ -27,7 +23,8 @@ export class AllPostComponent implements OnInit {
   }
 
   formatDate(timestamp: Timestamp | Date): string {
-    const date = timestamp instanceof Timestamp ? timestamp.toDate() : timestamp;
+    const date =
+      timestamp instanceof Timestamp ? timestamp.toDate() : timestamp;
     return date.toLocaleDateString('en-US', {
       year: 'numeric',
       month: 'long',
@@ -36,5 +33,11 @@ export class AllPostComponent implements OnInit {
       minute: '2-digit',
       second: '2-digit',
     });
+  }
+
+  onDeletePost(id: any, postImg: string) {
+    console.log('post to delete ', id);
+    this.postService.deletePostImage(postImg);
+    this.postService.deleteData(id);
   }
 }

@@ -23,6 +23,7 @@ import {
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
+import { deleteObject } from '@firebase/storage';
 
 @Injectable({
   providedIn: 'root',
@@ -103,6 +104,28 @@ export class PostsService {
     } catch (error) {
       console.error('Error editing post: ', error);
       this.toastr.error('Error editing post');
+    }
+  }
+
+  async deletePostImage(postImage: string) {
+    const imageRef = ref(this.storage, postImage);
+    try {
+        await deleteObject(imageRef);
+        this.toastr.success('Post Image Deleted Successfully');
+    } catch (error) {
+        console.error('Error deleting post image: ', error);
+        this.toastr.error('Error deleting post image');
+    }
+}
+
+  async deleteData(id: string) {
+    const docRef = doc(this.afs, `posts/${id}`);
+    try {
+      await deleteDoc(docRef);
+      this.toastr.success('Post Deleted Successfully');
+    } catch (error) {
+      console.error('Error deleting post: ', error);
+      this.toastr.error('Error deleting post');
     }
   }
 }
