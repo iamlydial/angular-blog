@@ -35,7 +35,12 @@ export class PostsService {
     private router: Router
   ) {}
 
-  async uploadImage(selectedImage: any, postData: Post): Promise<string> {
+  async uploadImage(
+    selectedImage: any,
+    postData: Post,
+    formStatus: any,
+    id: string
+  ): Promise<string> {
     const filePath = `postImage/${Date.now()}`;
     console.log(filePath);
 
@@ -44,7 +49,12 @@ export class PostsService {
 
     console.log('Post image uploaded successfully');
     postData.postImage = await getDownloadURL(storageRef);
-    this.savePostData(postData);
+
+    if (formStatus == 'Edit') {
+      this.updateData(id, postData);
+    } else {
+      this.savePostData(postData);
+    }
 
     return postData.postImage;
   }
@@ -82,6 +92,17 @@ export class PostsService {
   loadOneData(id: string): Observable<Post> {
     const postDocRef = doc(this.afs, `posts/${id}`);
     return docData(postDocRef) as Observable<Post>;
-}
+  }
 
+  async updateData(id: string, editData: any) {
+    const docRef = doc(this.afs, `posts/${id}`);
+    try {
+      await updateDoc(docRef, editData);
+      this.toastr.success('Post Edited Successfully');
+      this.router.navigate(['/posts']);
+    } catch (error) {
+      console.error('Error editing post: ', error);
+      this.toastr.error('Error editing post');
+    }
+  }
 }

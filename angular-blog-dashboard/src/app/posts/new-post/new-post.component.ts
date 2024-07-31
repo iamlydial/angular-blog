@@ -32,8 +32,10 @@ export class NewPostComponent implements OnInit {
   imgSrc: any = './assets/placeholder-image.png';
   selectedImage: any;
   categories: Array<Category> = [];
-
   postForm!: FormGroup;
+  post: any;
+  formStatus: string = 'Add New';
+  docId: string;
 
   constructor(
     private categoryService: CategoriesService,
@@ -42,19 +44,31 @@ export class NewPostComponent implements OnInit {
     private route: ActivatedRoute
   ) {
     this.route.queryParams.subscribe((val) => {
+      this.docId = val['id'];
       console.log(val, 'val from the queryParams');
       this.postService.loadOneData(val['id']).subscribe((post) => {
-        console.log(post, "post from from the queryParams");
+        this.post = post;
+        console.log(post, 'post from from the queryParams');
+        this.postForm = this.fb.group({
+          title: [post.title, [Validators.required, Validators.minLength(10)]],
+          permalink: [
+            { value: post.permalink, disabled: true },
+            [Validators.required],
+          ],
+          excerpt: [
+            post.excerpt,
+            [Validators.required, Validators.minLength(50)],
+          ],
+          category: [
+            `${this.post.category.categoryId}-${this.post.category.category}`,
+            [Validators.required],
+          ],
+          postImage: ['', [Validators.required]],
+          content: [post.content, [Validators.required]],
+        });
+        this.imgSrc = post.postImage;
+        this.formStatus = 'Edit';
       });
-    });
-
-    this.postForm = this.fb.group({
-      title: ['', [Validators.required, Validators.minLength(10)]],
-      permalink: [{ value: '', disabled: true }, [Validators.required]],
-      excerpt: ['', [Validators.required, Validators.minLength(50)]],
-      category: ['', [Validators.required]],
-      postImage: ['', [Validators.required]],
-      content: ['', [Validators.required]],
     });
   }
 
@@ -104,7 +118,12 @@ export class NewPostComponent implements OnInit {
       status: 'new',
       createdAt: new Date(),
     };
-    this.postService.uploadImage(this.selectedImage, postData);
+    this.postService.uploadImage(
+      this.selectedImage,
+      postData,
+      this.formStatus,
+      this.docId
+    );
     this.postForm.reset();
     this.imgSrc = './assets/placeholder-image.png';
   }
