@@ -35,7 +35,7 @@ export class NewPostComponent implements OnInit {
   postForm!: FormGroup;
   post: any;
   formStatus: string = 'Add New';
-  docId: string;
+  docId!: string;
 
   constructor(
     private categoryService: CategoriesService,
@@ -46,29 +46,43 @@ export class NewPostComponent implements OnInit {
     this.route.queryParams.subscribe((val) => {
       this.docId = val['id'];
       console.log(val, 'val from the queryParams');
-      this.postService.loadOneData(val['id']).subscribe((post) => {
-        this.post = post;
-        console.log(post, 'post from from the queryParams');
-        this.postForm = this.fb.group({
-          title: [post.title, [Validators.required, Validators.minLength(10)]],
-          permalink: [
-            { value: post.permalink, disabled: true },
-            [Validators.required],
-          ],
-          excerpt: [
-            post.excerpt,
-            [Validators.required, Validators.minLength(50)],
-          ],
-          category: [
-            `${this.post.category.categoryId}-${this.post.category.category}`,
-            [Validators.required],
-          ],
-          postImage: ['', [Validators.required]],
-          content: [post.content, [Validators.required]],
+      if (this.docId) {
+        this.postService.loadOneData(val['id']).subscribe((post) => {
+          this.post = post;
+          console.log(post, 'post from from the queryParams');
+          this.postForm = this.fb.group({
+            title: [
+              post.title,
+              [Validators.required, Validators.minLength(10)],
+            ],
+            permalink: [
+              { value: post.permalink, disabled: true },
+              [Validators.required],
+            ],
+            excerpt: [
+              post.excerpt,
+              [Validators.required, Validators.minLength(50)],
+            ],
+            category: [
+              `${this.post.category.categoryId}-${this.post.category.category}`,
+              [Validators.required],
+            ],
+            postImage: ['', [Validators.required]],
+            content: [post.content, [Validators.required]],
+          });
+          this.imgSrc = post.postImage;
+          this.formStatus = 'Edit';
         });
-        this.imgSrc = post.postImage;
-        this.formStatus = 'Edit';
-      });
+      } else {
+        this.postForm = this.fb.group({
+          title: ['', [Validators.required, Validators.minLength(10)]],
+          permalink: [{ value: '', disabled: true }, [Validators.required]],
+          excerpt: ['', [Validators.required, Validators.minLength(50)]],
+          category: ['', [Validators.required]],
+          postImage: ['', [Validators.required]],
+          content: ['', [Validators.required]],
+        });
+      }
     });
   }
 
