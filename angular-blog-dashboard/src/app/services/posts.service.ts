@@ -17,6 +17,8 @@ import {
   doc,
   updateDoc,
   deleteDoc,
+  getDoc,
+  docData,
 } from '@angular/fire/firestore';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
@@ -76,4 +78,10 @@ export class PostsService {
       return () => unsubscribe();
     });
   }
+
+  loadOneData(id: string): Observable<Post> {
+    const postDocRef = doc(this.afs, `posts/${id}`);
+    return docData(postDocRef) as Observable<Post>;
+}
+
 }

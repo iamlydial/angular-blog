@@ -13,6 +13,7 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
 import { Post } from '../../models/post';
 import { PostsService } from '../../services/posts.service';
 import { Observable } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-new-post',
@@ -37,8 +38,16 @@ export class NewPostComponent implements OnInit {
   constructor(
     private categoryService: CategoriesService,
     private fb: FormBuilder,
-    private postService: PostsService
+    private postService: PostsService,
+    private route: ActivatedRoute
   ) {
+    this.route.queryParams.subscribe((val) => {
+      console.log(val, 'val from the queryParams');
+      this.postService.loadOneData(val['id']).subscribe((post) => {
+        console.log(post, "post from from the queryParams");
+      });
+    });
+
     this.postForm = this.fb.group({
       title: ['', [Validators.required, Validators.minLength(10)]],
       permalink: [{ value: '', disabled: true }, [Validators.required]],
