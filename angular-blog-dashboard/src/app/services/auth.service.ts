@@ -9,21 +9,21 @@ import {
   authState,
 } from '@angular/fire/auth';
 import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
+//import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  user$: Observable<User | null>; 
+  user$: Observable<User | null>;
 
   constructor(
     private afAuth: Auth,
-    private toastr: ToastrService,
+    //private toastr: ToastrService,
     private router: Router
   ) {
-    this.user$ = authState(this.afAuth); /
+    this.user$ = authState(this.afAuth);
   }
 
   async login(email: string, password: string): Promise<User | null> {
@@ -33,22 +33,37 @@ export class AuthService {
         email,
         password
       );
-      this.toastr.success('User Authenthicated Successfully');
+      console.log('User Authenthicated Successfully');
       this.router.navigate(['/posts']);
+      this.loadUser();
       return userCredential.user;
     } catch (error: any) {
-      this.toastr.warning(error);
+      console.log(error);
       return null;
     }
   }
 
   async loadUser(): Promise<User | null> {
-    const user = this.afAuth.currentUser;
-    if (user) {
-      console.log(JSON.parse(JSON.stringify(user))); // Log user details
-      return user;
-    } else {
-      console.log('No user is signed in.');
+    try {
+      const user = this.afAuth.currentUser; // Await currentUser to get the actual user
+      console.log(user, 'user 1');
+      if (user) {
+        // Serialize user object to a plain object
+        const userData = {
+          uid: user.uid,
+          email: user.email,
+          displayName: user.displayName,
+          photoURL: user.photoURL,
+        };
+        console.log(userData, 'userData from auth service load');
+        localStorage.setItem('user', JSON.stringify(userData));
+        return user;
+      } else {
+        console.log('No user is signed in.');
+        return null;
+      }
+    } catch (error) {
+      console.error('Error loading user:', error);
       return null;
     }
   }
