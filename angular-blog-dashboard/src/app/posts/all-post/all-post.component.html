@@ -54,17 +54,19 @@
                   >
                     Delete
                   </button>
+
                   <button
                     *ngIf="!post.isFeatured"
                     class="btn btn-sm btn-success ml-3"
-                    (click)="onDeletePost(post.id, post.postImage)"
+                    (click)="onFeaturedPost(post.id, true)"
                   >
                     Mark Featured
                   </button>
+
                   <button
                     *ngIf="post.isFeatured"
                     class="btn btn-sm btn-info ml-3"
-                    (click)="onDeletePost(post.id, post.postImage)"
+                    (click)="onFeaturedPost(post.id, false)"
                   >
                     Remove Featured
                   </button>

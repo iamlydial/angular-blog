@@ -16,6 +16,7 @@ export class AllPostComponent implements OnInit {
   posts: Array<Post> = [];
 
   constructor(private postService: PostsService) {}
+
   ngOnInit(): void {
     this.postService.loadData().subscribe((postVal) => {
       this.posts = postVal;
@@ -39,5 +40,13 @@ export class AllPostComponent implements OnInit {
     console.log('post to delete ', id);
     this.postService.deletePostImage(postImg);
     this.postService.deleteData(id);
+  }
+
+  onFeaturedPost(id: any, value: boolean) {
+    const featuredData = {
+      isFeatured: value,
+    };
+    this.postService.markFeatured(id, featuredData);
+    console.log(featuredData, 'featured data');
   }
 }

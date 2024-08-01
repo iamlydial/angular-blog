@@ -110,13 +110,13 @@ export class PostsService {
   async deletePostImage(postImage: string) {
     const imageRef = ref(this.storage, postImage);
     try {
-        await deleteObject(imageRef);
-        this.toastr.success('Post Image Deleted Successfully');
+      await deleteObject(imageRef);
+      this.toastr.success('Post Image Deleted Successfully');
     } catch (error) {
-        console.error('Error deleting post image: ', error);
-        this.toastr.error('Error deleting post image');
+      console.error('Error deleting post image: ', error);
+      this.toastr.error('Error deleting post image');
     }
-}
+  }
 
   async deleteData(id: string) {
     const docRef = doc(this.afs, `posts/${id}`);
@@ -126,6 +126,18 @@ export class PostsService {
     } catch (error) {
       console.error('Error deleting post: ', error);
       this.toastr.error('Error deleting post');
+    }
+  }
+
+  async markFeatured(id: string, featuredData: any) {
+    const docRef = doc(this.afs, `posts/${id}`);
+    try {
+      await updateDoc(docRef, featuredData);
+      console.log('featured data from service', featuredData);
+      this.toastr.info('Featured status updated successfully');
+    } catch (error) {
+      console.error('Error updating Featured statu: ', error);
+      this.toastr.error('Error updating Featured statu');
     }
   }
 }
