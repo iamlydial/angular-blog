@@ -26,7 +26,6 @@
                 <th>No</th>
                 <th>Post Image</th>
                 <th>Title</th>
-                <th>Excerpt</th>
                 <th>Category</th>
                 <th>Date</th>
                 <th>Actions</th>
@@ -39,7 +38,6 @@
                   <img class="img img-fluid" src="{{ post.postImage }}" />
                 </td>
                 <td width="200">{{ post.title }}</td>
-                <td width="300">{{ post.excerpt }}</td>
                 <td>{{ post.category.category }}</td>
                 <td>{{ formatDate(post.createdAt) }}</td>
                 <td>
@@ -55,6 +53,20 @@
                     (click)="onDeletePost(post.id, post.postImage)"
                   >
                     Delete
+                  </button>
+                  <button
+                    *ngIf="!post.isFeatured"
+                    class="btn btn-sm btn-success ml-3"
+                    (click)="onDeletePost(post.id, post.postImage)"
+                  >
+                    Mark Featured
+                  </button>
+                  <button
+                    *ngIf="post.isFeatured"
+                    class="btn btn-sm btn-info ml-3"
+                    (click)="onDeletePost(post.id, post.postImage)"
+                  >
+                    Remove Featured
                   </button>
                 </td>
               </tr>
