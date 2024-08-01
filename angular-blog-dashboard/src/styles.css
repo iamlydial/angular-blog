@@ -60,7 +60,6 @@ input[type="password"] {
 .btn-theme {
   height: 58px;
   border: none;
-  font-size: 13px;
   background-color: var(--primary-color);
 }
 
