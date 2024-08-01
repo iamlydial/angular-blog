@@ -11,13 +11,4 @@
       Logout
     </button>
   </div>
-  <div class="container justify-content-center" *ngIf="!(isLoggedIn$ | async)">
-    <a href="#" class="mr-3">{{ emailUser }}</a>
-    <button
-      routerLink="/login"
-      class="btn btn-sm btn-info bg-secondary-theme text-theme-primary"
-    >
-      Login
-    </button>
-  </div>
 </header>

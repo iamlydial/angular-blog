@@ -18,6 +18,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export class AuthService {
   user$: Observable<User | null>;
   loggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  loggedInGuard: boolean = false;
 
   constructor(
     private afAuth: Auth,
@@ -38,6 +39,7 @@ export class AuthService {
       console.log('User Authenthicated Successfully');
       this.loadUser();
       this.loggedIn.next(true);
+      this.loggedInGuard = true;
       this.router.navigate(['/posts']);
 
       return userCredential.user;
@@ -52,6 +54,7 @@ export class AuthService {
     this.afAuth.signOut();
     localStorage.removeItem('user');
     this.loggedIn.next(false);
+    this.loggedInGuard = false;
     this.router.navigate(['/login']);
     console.log('user successfully logout!');
   }
