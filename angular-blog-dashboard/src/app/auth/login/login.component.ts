@@ -9,4 +9,8 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })
-export class LoginComponent {}
+export class LoginComponent {
+  onSubmit(formValue: any) {
+    console.log(formValue);
+  }
+}
