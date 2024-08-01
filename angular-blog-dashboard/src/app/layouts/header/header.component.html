@@ -2,10 +2,22 @@
   <div class="container justify-content-center">
     <a href="#" class="site-logo">ANG-BLOG</a>
   </div>
-  <div class="container justify-content-center">
+  <div class="container justify-content-center" *ngIf="isLoggedIn$ | async">
     <a href="#" class="mr-3">{{ emailUser }}</a>
-    <button class="btn btn-sm btn-info bg-secondary-theme text-theme-primary">
+    <button
+      (click)="onLogOut()"
+      class="btn btn-sm btn-info bg-secondary-theme text-theme-primary"
+    >
       Logout
+    </button>
+  </div>
+  <div class="container justify-content-center" *ngIf="!(isLoggedIn$ | async)">
+    <a href="#" class="mr-3">{{ emailUser }}</a>
+    <button
+      routerLink="/login"
+      class="btn btn-sm btn-info bg-secondary-theme text-theme-primary"
+    >
+      Login
     </button>
   </div>
 </header>

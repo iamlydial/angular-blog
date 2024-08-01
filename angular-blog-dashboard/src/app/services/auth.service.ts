@@ -10,13 +10,14 @@ import {
 } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 //import { ToastrService } from 'ngx-toastr';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   user$: Observable<User | null>;
+  loggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   constructor(
     private afAuth: Auth,
@@ -24,6 +25,7 @@ export class AuthService {
     private router: Router
   ) {
     this.user$ = authState(this.afAuth);
+    this.user$.subscribe((user) => this.loggedIn.next(!!user));
   }
 
   async login(email: string, password: string): Promise<User | null> {
@@ -34,13 +36,24 @@ export class AuthService {
         password
       );
       console.log('User Authenthicated Successfully');
-      this.router.navigate(['/posts']);
       this.loadUser();
+      this.loggedIn.next(true);
+      this.router.navigate(['/posts']);
+
       return userCredential.user;
     } catch (error: any) {
       console.log(error);
       return null;
     }
+  }
+
+  logout() {
+    const user = this.afAuth.currentUser;
+    this.afAuth.signOut();
+    localStorage.removeItem('user');
+    this.loggedIn.next(false);
+    this.router.navigate(['/login']);
+    console.log('user successfully logout!');
   }
 
   async loadUser(): Promise<User | null> {
@@ -66,5 +79,9 @@ export class AuthService {
       console.error('Error loading user:', error);
       return null;
     }
+  }
+
+  isLoggedIn(): Observable<boolean> {
+    return this.loggedIn.asObservable();
   }
 }
