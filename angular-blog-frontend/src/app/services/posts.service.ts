@@ -86,6 +86,26 @@ export class PostsService {
     });
   }
 
+  loadSimilarPosts(catId: string) {
+    const postsCollection = collection(this.afs, 'posts');
+    const q = query(
+      postsCollection,
+      where('category.categoryId', '==', catId),
+      limit(4)
+    );
 
+    // Return an Observable
+    return new Observable<Post[]>((observer) => {
+      const unsubscribe = onSnapshot(q, (snapshot) => {
+        const posts: Post[] = snapshot.docs.map(
+          (doc) => ({ id: doc.id, ...doc.data() } as Post)
+        );
+        observer.next(posts); // Emit the categories
+        console.log(posts);
+      });
 
+      // Clean up subscription
+      return () => unsubscribe();
+    });
+  }
 }

@@ -27,9 +27,9 @@
       <app-comment-list></app-comment-list>
     </div>
     <div class="col-md-3">
-      <app-post-card></app-post-card>
-      <app-post-card></app-post-card>
-      <app-post-card></app-post-card>
+      <div *ngFor="let similarpost of similarPostArray">
+        <app-post-card [postData]="similarpost"></app-post-card>
+      </div>
     </div>
   </div>
 </div>
