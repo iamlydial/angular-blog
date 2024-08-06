@@ -2,11 +2,12 @@ import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Post } from '../../../../../angular-blog-dashboard/src/app/models/post';
 import { Timestamp } from '@angular/fire/firestore';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-post-card',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './post-card.component.html',
   styleUrl: './post-card.component.css',
 })
