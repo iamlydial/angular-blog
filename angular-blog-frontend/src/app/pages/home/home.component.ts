@@ -12,6 +12,7 @@ import { CommonModule } from '@angular/common';
 })
 export class HomeComponent implements OnInit {
   featuredPostsArray: Post[] = [];
+  latestPostsArray: Post[] = [];
 
   constructor(private postService: PostsService) {}
 
@@ -19,6 +20,11 @@ export class HomeComponent implements OnInit {
     this.postService.loadFeaturedData().subscribe((val) => {
       this.featuredPostsArray = val;
       console.log(val, 'only featured posts from the frontend');
+    });
+
+    this.postService.loadLatestData().subscribe((val) => {
+      this.latestPostsArray = val;
+      console.log(val, 'only latest posts from the frontend');
     });
   }
 }

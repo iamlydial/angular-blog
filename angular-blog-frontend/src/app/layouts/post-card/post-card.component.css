@@ -1,5 +1,6 @@
 .card {
   max-width: 400px;
+  min-height: 500px;
 }
 
 h5 {

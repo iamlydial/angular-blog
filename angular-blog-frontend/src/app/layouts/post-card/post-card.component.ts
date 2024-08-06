@@ -13,12 +13,11 @@ import { Timestamp } from '@angular/fire/firestore';
 export class PostCardComponent implements OnInit {
   @Input() postData!: Post;
 
-  constructor() {
-  }
+  constructor() {}
 
   ngOnInit(): void {
-    console.log(this.postData, "LLL")
     console.log('ngOnInit - postData:', this.postData);
+    console.log('ngOnInit - latestPostData:', this.postData);
   }
 
   formatDate(timestamp: Timestamp | Date): string {
@@ -33,6 +32,4 @@ export class PostCardComponent implements OnInit {
       second: '2-digit',
     });
   }
-
-  
 }
