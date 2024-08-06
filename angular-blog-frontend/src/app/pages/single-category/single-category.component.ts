@@ -14,6 +14,7 @@ import { CommonModule } from '@angular/common';
 })
 export class SingleCategoryComponent implements OnInit {
   postsArray!: Array<Post>;
+  categoryObj!: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -21,6 +22,7 @@ export class SingleCategoryComponent implements OnInit {
   ) {
     this.route.params.subscribe((val) => {
       console.log(val);
+      this.categoryObj = val;
       this.postService.loadCategoryPost(val['id']).subscribe((post) => {
         this.postsArray = post;
       });
