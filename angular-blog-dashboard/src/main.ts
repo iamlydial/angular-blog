@@ -4,7 +4,7 @@ import { appConfig } from './app/app.config';
 import { AppComponent } from './app/app.component';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+  
 bootstrapApplication(AppComponent, {
   ...appConfig,
 
