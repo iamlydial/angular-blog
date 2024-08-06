@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {
   Firestore,
   collection,
+  increment,
   onSnapshot,
   query,
   doc,
@@ -9,6 +10,7 @@ import {
   where,
   limit,
   orderBy,
+  updateDoc,
 } from '@angular/fire/firestore';
 
 import { Post } from '../../../../angular-blog-dashboard/src/app/models/post';
@@ -107,5 +109,16 @@ export class PostsService {
       // Clean up subscription
       return () => unsubscribe();
     });
+  }
+
+  countViews(postId: string) {
+    const postDocRef = doc(this.afs, `posts/${postId}`);
+    updateDoc(postDocRef, { views: increment(1) })
+      .then(() => {
+        console.log('View count updated successfully');
+      })
+      .catch((error) => {
+        console.error('Error updating view count: ', error);
+      });
   }
 }
