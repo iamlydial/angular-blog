@@ -30,4 +30,5 @@ export class SingleCategoryComponent implements OnInit {
   }
 
   ngOnInit(): void {}
+
 }

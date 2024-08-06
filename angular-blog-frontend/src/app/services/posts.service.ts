@@ -58,7 +58,7 @@ export class PostsService {
     });
   }
 
-  loadOneData(id: string): Observable<Post> {
+  loadOnePost(id: string): Observable<Post> {
     const postDocRef = doc(this.afs, `posts/${id}`);
     return docData(postDocRef) as Observable<Post>;
   }
@@ -85,4 +85,7 @@ export class PostsService {
       return () => unsubscribe();
     });
   }
+
+
+
 }

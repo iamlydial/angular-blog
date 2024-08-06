@@ -3,68 +3,33 @@
     <div class="col-md-9">
       <div class="card shadow-effect">
         <img
-          src="https://images.pexels.com/photos/1227497/pexels-photo-1227497.jpeg"
+          src="{{ postData.postImage }}"
           class="card-img-top img-fluid"
           alt=""
         />
         <div class="card-body">
-          <small class="bg-light text-danger text-center">Design</small>
+          <small class="bg-light text-danger text-center">{{
+            postData.category.category
+          }}</small>
           <small class="bg-light text-warning text-center ml-2">Featured</small>
           <small class="bg-light text-info text-center ml-2"
-            >Views - 100,345</small
+            >Views - {{ postData.views }}</small
           >
           <small class="bg-light text-success text-center ml-2"
-            >LAST UPDATED - Sep 20, 2021</small
+            >LAST UPDATED - {{ formatDate(postData.createdAt) }}</small
           >
 
-          <h1 class="mt-3 mb-3">HOW TO START A BLOG IN 2024</h1>
-          <p>
-            Officia voluptate voluptate eiusmod dolor. Laborum incididunt ex
-            nulla consectetur. Commodo cillum id culpa et est sint commodo
-            veniam dolor labore fugiat. Pariatur nisi occaecat nulla nostrud.
-            Est et eiusmod aliqua non. 
-            <br><br>
-            Veniam nostrud anim nostrud et do eiusmod
-            ea ut aliquip velit deserunt incididunt laboris et. Id qui eiusmod
-            et mollit do fugiat Lorem magna. Duis tempor ad elit ea officia
-            exercitation excepteur elit deserunt non cupidatat. Elit dolore sint
-            ea dolor velit ad tempor nostrud proident consectetur ipsum.
-            <br><br>
-            Cupidatat reprehenderit incididunt aute sit consectetur aliquip.
-            Amet proident nisi deserunt qui non. Officia fugiat aliqua
-            exercitation tempor laborum. Ea mollit nisi commodo incididunt
-            cupidatat reprehenderit sit ipsum in voluptate id. Dolore eu commodo
-            ullamco labore deserunt irure ex velit duis velit eu ullamco sunt
-            do. Officia labore officia incididunt aute. 
-            <br><br>
-            Qui laboris eu tempor minim veniam ipsum labore nostrud cupidatat cupidatat aliquip
-            adipisicing nulla. Aliquip Lorem pariatur ipsum sunt proident
-            laboris. Consectetur nulla eiusmod ipsum ad tempor eiusmod
-            voluptate. Elit deserunt consectetur sunt pariatur. Sit et excepteur
-            officia ea nulla laborum Lorem aliqua anim velit excepteur. 
-            <br><br>Eu dolor pariatur esse non laborum exercitation dolore quis consectetur
-            eiusmod dolore. Incididunt ex id quis occaecat incididunt sit
-            aliquip culpa pariatur. Commodo voluptate ad in excepteur incididunt
-            dolore. Adipisicing enim id non adipisicing ipsum in sit est anim in
-            minim sint esse. Nulla ipsum et ex minim irure laboris esse proident
-            ut proident adipisicing enim. 
-            <br><br>
-            Cillum proident consequat elit fugiat enim fugiat mollit. Eu ad aliquip tempor officia anim non dolor
-            deserunt ea dolore incididunt dolore. Consequat proident dolore
-            cupidatat voluptate Lorem labore commodo id laboris. Proident sint
-            fugiat dolor proident nostrud sunt pariatur tempor consequat.
-          </p>
+          <h1 class="mt-3 mb-3">{{ postData.title }}</h1>
+          <p [innerHtml]="postData.content"></p>
         </div>
       </div>
       <app-comment-form></app-comment-form>
       <app-comment-list></app-comment-list>
     </div>
     <div class="col-md-3">
-        <app-post-card></app-post-card>
-        <app-post-card></app-post-card>
-        <app-post-card></app-post-card>
-        <app-post-card></app-post-card>
+      <app-post-card></app-post-card>
+      <app-post-card></app-post-card>
+      <app-post-card></app-post-card>
     </div>
   </div>
-  
 </div>
