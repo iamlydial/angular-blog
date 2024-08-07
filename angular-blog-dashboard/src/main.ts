@@ -2,7 +2,6 @@ import { bootstrapApplication } from '@angular/platform-browser';
 import { importProvidersFrom } from '@angular/core';
 import { appConfig } from './app/app.config';
 import { AppComponent } from './app/app.component';
-import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   
 bootstrapApplication(AppComponent, {
@@ -10,6 +9,6 @@ bootstrapApplication(AppComponent, {
 
   providers: [
     ...(appConfig.providers || []),
-    importProvidersFrom(BrowserAnimationsModule, ToastrModule.forRoot()),
+    importProvidersFrom(BrowserAnimationsModule),
   ],
 }).catch((err) => console.error(err));

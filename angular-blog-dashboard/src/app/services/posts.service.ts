@@ -20,7 +20,6 @@ import {
   getDoc,
   docData,
 } from '@angular/fire/firestore';
-import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { deleteObject } from '@firebase/storage';
@@ -32,7 +31,6 @@ export class PostsService {
   constructor(
     private storage: Storage,
     private afs: Firestore,
-    private toastr: ToastrService,
     private router: Router
   ) {}
 
@@ -67,7 +65,6 @@ export class PostsService {
     console.log(`Post saved with ID: ${docId}`);
     postData.id = docId;
 
-    this.toastr.success('Post saved Successfully');
     this.router.navigate(['/posts']);
   }
 
@@ -99,11 +96,9 @@ export class PostsService {
     const docRef = doc(this.afs, `posts/${id}`);
     try {
       await updateDoc(docRef, editData);
-      this.toastr.success('Post Edited Successfully');
       this.router.navigate(['/posts']);
     } catch (error) {
       console.error('Error editing post: ', error);
-      this.toastr.error('Error editing post');
     }
   }
 
@@ -111,10 +106,8 @@ export class PostsService {
     const imageRef = ref(this.storage, postImage);
     try {
       await deleteObject(imageRef);
-      this.toastr.success('Post Image Deleted Successfully');
     } catch (error) {
       console.error('Error deleting post image: ', error);
-      this.toastr.error('Error deleting post image');
     }
   }
 
@@ -122,10 +115,8 @@ export class PostsService {
     const docRef = doc(this.afs, `posts/${id}`);
     try {
       await deleteDoc(docRef);
-      this.toastr.success('Post Deleted Successfully');
     } catch (error) {
       console.error('Error deleting post: ', error);
-      this.toastr.error('Error deleting post');
     }
   }
 
@@ -134,10 +125,8 @@ export class PostsService {
     try {
       await updateDoc(docRef, featuredData);
       console.log('featured data from service', featuredData);
-      this.toastr.info('Featured status updated successfully');
     } catch (error) {
       console.error('Error updating Featured statu: ', error);
-      this.toastr.error('Error updating Featured statu');
     }
   }
 }

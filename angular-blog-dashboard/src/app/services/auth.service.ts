@@ -1,15 +1,11 @@
 import { Injectable } from '@angular/core';
 import {
   Auth,
-  getAuth,
   signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
-  signOut,
   User,
   authState,
 } from '@angular/fire/auth';
 import { Router } from '@angular/router';
-//import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
@@ -22,7 +18,6 @@ export class AuthService {
 
   constructor(
     private afAuth: Auth,
-    //private toastr: ToastrService,
     private router: Router
   ) {
     this.user$ = authState(this.afAuth);
