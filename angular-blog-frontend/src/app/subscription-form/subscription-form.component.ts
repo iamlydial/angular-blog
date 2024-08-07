@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Form, FormsModule } from '@angular/forms';
 import { Sub } from '../models/sub';
 import { SubscribeService } from '../services/subscribe.service';
 
 interface FormValues {
+  id: string;
   name: string;
   email: string;
 }
@@ -16,17 +17,20 @@ interface FormValues {
   templateUrl: './subscription-form.component.html',
   styleUrl: './subscription-form.component.css',
 })
-export class SubscriptionFormComponent {
+export class SubscriptionFormComponent implements OnInit {
   isEmailError: boolean = false;
   isSubscribed: boolean = false;
 
   constructor(private subService: SubscribeService) {}
 
+  ngOnInit(): void {}
+  
   onSubmit(formVal: FormValues) {
     console.log(formVal);
     const subData: Sub = {
       name: formVal.name,
       email: formVal.email,
+      id: '',
     };
     this.subService
       .checkSubs(formVal.email)

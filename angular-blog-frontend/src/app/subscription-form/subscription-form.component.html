@@ -27,7 +27,7 @@
             #Name="ngModel"
             ngModel
             required
-            [ngClass]="{ 'is-invalid': 'Name.touched && Name.invalid' }"
+            [ngClass]="{ 'is-invalid': Name.touched && Name.invalid }"
           />
           <div class="text-danger" *ngIf="Name.touched && Name.invalid">
             <div *ngIf="Name.errors?.['required']">Name is required</div>
@@ -43,7 +43,7 @@
             ngModel
             required
             email
-            [ngClass]="{ 'is-invalid': 'Email.touched && Email.invalid' }"
+            [ngClass]="{ 'is-invalid': Email.touched && Email.invalid }"
           />
           <div class="text-danger" *ngIf="Email.touched && Email.invalid">
             <div *ngIf="Email.errors?.['required']">Email is required</div>
