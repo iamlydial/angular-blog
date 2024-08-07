@@ -12,7 +12,6 @@ import { CommonModule } from '@angular/common';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { Post } from '../../models/post';
 import { PostsService } from '../../services/posts.service';
-import { Observable } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
